@@ -12,7 +12,7 @@ namespace DemoMAUIApp
 
 #if WINDOWS
 
-        protected override Window CreateWindow(IActivationState? activationState)
+        protected override Window CreateWindow(IActivationState activationState)
         {
             Window window = base.CreateWindow(activationState);
 

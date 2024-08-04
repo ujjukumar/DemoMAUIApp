@@ -1,6 +1,16 @@
 ﻿namespace DemoMAUIApp.ViewModels
 {
-    public class BaseViewModel
+    public partial class BaseViewModel : ObservableObject
     {
+        public BaseViewModel() { }
+
+        [ObservableProperty]
+        string title;
+
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(IsNotBusy))]
+        bool isBusy;
+
+        public bool IsNotBusy => !IsBusy;
     }
 }
