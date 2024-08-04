@@ -1,4 +1,4 @@
-﻿namespace DemoMAUIApp
+﻿namespace DemoMAUIApp.Views
 {
     public partial class MainPage : ContentPage
     {
