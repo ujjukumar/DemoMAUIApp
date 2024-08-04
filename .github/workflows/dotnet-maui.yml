@@ -1,0 +1,38 @@
+name: Build .NET MAUI App
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      Solution_Name: 'DemoMAUIApp.sln'
+
+    steps:
+    # Checkout latest changes
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    # Install the .NET Core workload
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    # Install .NET MAUI
+    - name: Install .NET MAUI
+      run: dotnet workload install maui-android maui-windows
+
+    # Restore the solution
+    - name: Dotnet Restore
+      run: dotnet restore $env:Solution_Name
+
+    # Build the solution
+    - name: Dotnet Build
+      run: dotnet build $env:Solution_Name -c Release --no-restore
