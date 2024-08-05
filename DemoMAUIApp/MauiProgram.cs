@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using DemoMAUIApp.Services;
+using Microsoft.Extensions.Logging;
 
 namespace DemoMAUIApp
 {
@@ -14,6 +15,15 @@ namespace DemoMAUIApp
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
+            // Adding Services
+            builder.Services.AddSingleton<MonkeyService>();
+
+            // Adding ViewModels
+            builder.Services.AddSingleton<MainViewModel>();
+
+            // Adding Views
+            builder.Services.AddSingleton<MainPage>();
 
 #if DEBUG
     		builder.Logging.AddDebug();
