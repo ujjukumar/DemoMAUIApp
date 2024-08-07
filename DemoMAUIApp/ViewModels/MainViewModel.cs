@@ -14,6 +14,18 @@ namespace DemoMAUIApp.ViewModels
         }
 
         [RelayCommand]
+        async Task GoToMonkeyDetailsAsync(Monkey monkey)
+        {
+            if (monkey is null) return;
+
+            await Shell.Current.GoToAsync(nameof(MonkeyDetailsPage), true,
+                new Dictionary<string, object>
+                {
+                    {nameof(Monkey), monkey}
+                });
+        }
+
+        [RelayCommand]
         async Task GetMonkeysAsync()
         {
             if (IsBusy) return;

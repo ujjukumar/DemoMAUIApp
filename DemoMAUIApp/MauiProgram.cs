@@ -21,9 +21,11 @@ namespace DemoMAUIApp
 
             // Adding ViewModels
             builder.Services.AddSingleton<MainViewModel>();
+            builder.Services.AddTransient<MonkeyDetailsViewModel>();
 
             // Adding Views
             builder.Services.AddSingleton<MainPage>();
+            builder.Services.AddTransient<MonkeyDetailsPage>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

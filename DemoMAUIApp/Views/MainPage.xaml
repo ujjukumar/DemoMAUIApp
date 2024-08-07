@@ -26,7 +26,16 @@
                             Padding="0"
                             HeightRequest="125"
                             Style="{StaticResource CardView}">
-                            <Grid Padding="0" ColumnDefinitions="125,*">
+
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=GoToMonkeyDetailsCommand}"
+                                    CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
+
+                            <Grid
+                                Padding="0"
+                                ColumnDefinitions="125,*">
                                 <Image
                                     Aspect="AspectFill"
                                     HeightRequest="125"
@@ -37,8 +46,12 @@
                                     Grid.Column="1"
                                     Padding="10"
                                     VerticalOptions="Center">
-                                    <Label Style="{StaticResource LargeLabel}" Text="{Binding Name}" />
-                                    <Label Style="{StaticResource MediumLabel}" Text="{Binding Location}" />
+                                    <Label
+                                        Style="{StaticResource LargeLabel}"
+                                        Text="{Binding Name}" />
+                                    <Label
+                                        Style="{StaticResource MediumLabel}"
+                                        Text="{Binding Location}" />
 
                                 </VerticalStackLayout>
                             </Grid>
