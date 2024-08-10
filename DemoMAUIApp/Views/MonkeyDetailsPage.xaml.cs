@@ -7,5 +7,5 @@ public partial class MonkeyDetailsPage : ContentPage
         InitializeComponent();
 
         BindingContext = viewModel;
-	}
+    }
 }

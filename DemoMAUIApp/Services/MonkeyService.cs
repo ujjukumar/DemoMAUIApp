@@ -4,14 +4,14 @@ namespace DemoMAUIApp.Services
 {
     public class MonkeyService
     {
-        HttpClient _httpClient;
+        readonly HttpClient _httpClient;
 
         public MonkeyService()
         {
             _httpClient = new HttpClient();
         }
 
-        List<Monkey> monkeyList = new();
+        List<Monkey> monkeyList = [];
 
         public async Task<List<Monkey>> GetMonkeysFromUrlAsync()
         {
