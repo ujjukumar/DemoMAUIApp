@@ -17,6 +17,9 @@ namespace DemoMAUIApp.ViewModels
             this._geolocation = geolocation;
         }
 
+        [ObservableProperty]
+        bool isRefreshing;
+
         [RelayCommand]
         async Task GoToMonkeyDetailsAsync(Monkey monkey)
         {
@@ -70,6 +73,7 @@ namespace DemoMAUIApp.ViewModels
             finally
             {
                 IsBusy = false;
+                IsRefreshing = false;
             }
         }
 
