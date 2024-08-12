@@ -1,35 +1,98 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
-    x:Class="DemoMAUIApp.Views.MainPage"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+<ContentPage x:Class="DemoMAUIApp.Views.MainPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:model="clr-namespace:DemoMAUIApp.Models"
+             xmlns:vm="clr-namespace:DemoMAUIApp.ViewModels"
+             Title="{Binding Title}"
+             ios:Page.UseSafeArea="True"
+             x:DataType="vm:MainViewModel">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="30,0" Spacing="25">
-            <Image
-                Aspect="AspectFit"
-                HeightRequest="185"
-                SemanticProperties.Description="dot net bot in a race car number eight"
-                Source="dotnet_bot.png" />
+    <Grid ColumnDefinitions="*,*"
+          ColumnSpacing="5"
+          RowDefinitions="*,Auto"
+          RowSpacing="0">
 
-            <Label
-                SemanticProperties.HeadingLevel="Level1"
-                Style="{StaticResource Headline}"
-                Text="Hello, World!" />
+        <RefreshView Grid.ColumnSpan="2"
+                     Command="{Binding GetMonkeysCommand}"
+                     IsRefreshing="{Binding IsRefreshing}">
 
-            <Label
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                SemanticProperties.HeadingLevel="Level2"
-                Style="{StaticResource SubHeadline}"
-                Text="Welcome to &#10;.NET Multi-platform App UI" />
+            <CollectionView ItemsSource="{Binding Monkeys}"
+                            SelectionMode="None">
 
-            <Button
-                x:Name="CounterBtn"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Fill"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Text="Click me" />
-        </VerticalStackLayout>
-    </ScrollView>
+                <CollectionView.EmptyView>
+                    <StackLayout HeightRequest="200"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center"
+                                 WidthRequest="200">
+
+                        <Image Aspect="AspectFill"
+                               HorizontalOptions="CenterAndExpand"
+                               Source="nodata.png"
+                               VerticalOptions="CenterAndExpand" />
+
+                    </StackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Monkey">
+                        <Grid Padding="6">
+                            <Frame Padding="0"
+                                   HeightRequest="125"
+                                   Style="{StaticResource CardView}">
+
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=GoToMonkeyDetailsCommand}"
+                                                          CommandParameter="{Binding .}" />
+                                </Frame.GestureRecognizers>
+
+                                <Grid Padding="0"
+                                      ColumnDefinitions="125,*">
+                                    <Image Aspect="AspectFill"
+                                           HeightRequest="125"
+                                           Source="{Binding Image}"
+                                           WidthRequest="125" />
+
+                                    <VerticalStackLayout Grid.Column="1"
+                                                         Padding="10"
+                                                         VerticalOptions="Center">
+                                        <Label Style="{StaticResource LargeLabel}"
+                                               Text="{Binding Name}" />
+                                        <Label Style="{StaticResource MediumLabel}"
+                                               Text="{Binding Location}" />
+
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+        <Button Grid.Row="1"
+                Grid.Column="0"
+                Margin="6"
+                Command="{Binding GetClosestMonkeyCommand}"
+                IsEnabled="{Binding IsNotBusy}"
+                Style="{StaticResource ButtonOutline}"
+                Text="Get Closest" />
+
+        <Button Grid.Row="1"
+                Grid.Column="1"
+                Margin="6"
+                Command="{Binding GetMonkeysCommand}"
+                IsEnabled="{Binding IsNotBusy}"
+                Style="{StaticResource ButtonOutline}"
+                Text="Get Monkeys" />
+
+        <ActivityIndicator Grid.RowSpan="2"
+                           Grid.ColumnSpan="2"
+                           HorizontalOptions="FillAndExpand"
+                           IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
+                           VerticalOptions="CenterAndExpand" />
+
+    </Grid>
 
 </ContentPage>
